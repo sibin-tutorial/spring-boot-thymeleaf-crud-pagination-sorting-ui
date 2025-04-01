@@ -1,0 +1,91 @@
+/* Purple theme colors */
+:root {
+    --purple-primary: #6a0dad;
+    --purple-secondary: #9b59b6;
+    --purple-light: #e2d4f0;
+    --purple-dark: #4b0082;
+}
+
+/* Background and text colors */
+.bg-purple {
+    background-color: var(--purple-primary) !important;
+}
+
+.text-purple {
+    color: var(--purple-primary) !important;
+}
+
+/* Buttons */
+.btn-purple {
+    background-color: var(--purple-primary);
+    color: white;
+    border-color: var(--purple-primary);
+}
+
+.btn-purple:hover {
+    background-color: var(--purple-dark);
+    border-color: var(--purple-dark);
+    color: white;
+}
+
+.btn-outline-purple {
+    color: var(--purple-primary);
+    border-color: var(--purple-primary);
+}
+
+.btn-outline-purple:hover {
+    background-color: var(--purple-primary);
+    color: white;
+}
+
+/* Table styling */
+.table-purple {
+    background-color: var(--purple-primary);
+    color: white;
+}
+
+/* Card styling */
+.card {
+    border: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Form styling */
+.form-control:focus {
+    border-color: var(--purple-secondary);
+    box-shadow: 0 0 0 0.25rem rgba(106, 13, 173, 0.25);
+}
+
+/* Animation classes */
+.animate__animated {
+    animation-duration: 0.5s;
+}
+
+/* Pagination styling */
+.page-item.active .page-link {
+    background-color: var(--purple-primary);
+    border-color: var(--purple-primary);
+}
+
+.page-link {
+    color: var(--purple-primary);
+}
+
+.page-link:hover {
+    color: var(--purple-dark);
+}
+
+/* Alert styling */
+.alert {
+    border-left: 5px solid var(--purple-primary);
+}
+
+/* Custom shadow */
+.shadow-lg {
+    box-shadow: 0 0.5rem 1rem rgba(106, 13, 173, 0.15) !important;
+}

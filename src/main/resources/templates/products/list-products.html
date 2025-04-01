@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+    <title>Product List</title>
+</head>
+<body>
+    <div th:replace="fragments/navbar :: navbar"></div>
+    
+    <div class="container my-5">
+        <div class="card shadow-lg rounded-lg">
+            <div class="card-header bg-purple text-white">
+                <h2 class="mb-0">Product List</h2>
+            </div>
+            <div class="card-body">
+                <div th:if="${message}" class="alert alert-success alert-dismissible fade show" role="alert">
+                    <span th:text="${message}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                
+                <div class="mb-4">
+                    <a th:href="@{/products/new}" class="btn btn-purple">
+                        <i class="fas fa-plus"></i> Add New Product
+                    </a>
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead class="table-purple">
+                            <tr>
+                                <th>
+                                    <a th:href="@{'/products?page=' + ${currentPage} + '&sortField=name&sortDir=' + ${reverseSortDir} + (keyword != null ? '&keyword=' + keyword : '')}">
+                                        Name
+                                        <span th:if="${sortField == 'name'}">
+                                            <i th:class="${sortDir == 'asc'} ? 'fas fa-sort-up' : 'fas fa-sort-down'"></i>
+                                        </span>
+                                    </a>
+                                </th>
+                                <th>Description</th>
+                                <th>
+                                    <a th:href="@{'/products?page=' + ${currentPage} + '&sortField=price&sortDir=' + ${reverseSortDir} + (keyword != null ? '&keyword=' + keyword : '')}">
+                                        Price
+                                        <span th:if="${sortField == 'price'}">
+                                            <i th:class="${sortDir == 'asc'} ? 'fas fa-sort-up' : 'fas fa-sort-down'"></i>
+                                        </span>
+                                    </a>
+                                </th>
+                                <th>
+                                    <a th:href="@{'/products?page=' + ${currentPage} + '&sortField=quantity&sortDir=' + ${reverseSortDir} + (keyword != null ? '&keyword=' + keyword : '')}">
+                                        Quantity
+                                        <span th:if="${sortField == 'quantity'}">
+                                            <i th:class="${sortDir == 'asc'} ? 'fas fa-sort-up' : 'fas fa-sort-down'"></i>
+                                        </span>
+                                    </a>
+                                </th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="product : ${listProducts}" class="animate__animated animate__fadeIn">
+                                <td th:text="${product.name}"></td>
+                                <td th:text="${product.description}"></td>
+                                <td th:text="${'$' + #numbers.formatDecimal(product.price, 1, 2, 'COMMA')}"></td>
+                                <td th:text="${product.quantity}"></td>
+                                <td>
+                                    <a th:href="@{'/products/edit/' + ${product.id}}" class="btn btn-sm btn-outline-purple">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                    <a th:href="@{'/products/delete/' + ${product.id}}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this product?');">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div th:if="${totalPages > 1}" class="row mt-4">
+                    <div class="col-md-6">
+                        <p class="text-muted">Showing <span th:text="${(currentPage - 1) * 5 + 1}"></span> to 
+                            <span th:text="${(currentPage - 1) * 5 + listProducts.size()}"></span> of 
+                            <span th:text="${totalItems}"></span> entries</p>
+                    </div>
+                    <div class="col-md-6">
+                        <nav aria-label="Page navigation" class="float-end">
+                            <ul class="pagination">
+                                <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled' : ''">
+                                    <a class="page-link" th:href="@{'/products?page=1&sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + (keyword != null ? '&keyword=' + keyword : '')}">First</a>
+                                </li>
+                                <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled' : ''">
+                                    <a class="page-link" th:href="@{'/products?page=' + (currentPage - 1) + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + (keyword != null ? '&keyword=' + keyword : '')}">Previous</a>
+                                </li>
+                                <li th:each="i : ${#numbers.sequence(1, totalPages)}" class="page-item" th:classappend="${currentPage == i} ? 'active' : ''">
+                                    <a class="page-link" th:href="@{'/products?page=' + ${i} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + (keyword != null ? '&keyword=' + keyword : '')}" th:text="${i}"></a>
+                                </li>
+                                <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled' : ''">
+                                    <a class="page-link" th:href="@{'/products?page=' + (currentPage + 1) + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + (keyword != null ? '&keyword=' + keyword : '')}">Next</a>
+                                </li>
+                                <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled' : ''">
+                                    <a class="page-link" th:href="@{'/products?page=' + ${totalPages} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + (keyword != null ? '&keyword=' + keyword : '')}">Last</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
